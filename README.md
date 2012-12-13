@@ -19,17 +19,18 @@ do is import the TapForTap.unitypackage into your app. Then follow the steps bel
 for Android and iOS
 
 ### Configuring Tap for Tap for iOS
+- Add the AdSupport framework.
 
 ### Configuring Tap for Tap for Android
 
-8. Add the following permissions to the app.xml
-  - `<uses-permission android:name="android.permission.INTERNET" />`
-  - `<uses-permission android:name="android.permission.READ_PHONE_STATE" />`
-  - `<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />`
-  - `<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />`
-  - `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`
-10. Include the TapForTap activity in the `app.xml`
-  - `<activity android:name="com.tapfortap.TapForTapActivity"/>`
+1. Add the following permissions Unity's AndroidManifest.xml
+  `<uses-permission android:name="android.permission.INTERNET" />`
+  `<uses-permission android:name="android.permission.READ_PHONE_STATE" />`
+  `<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />`
+  `<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />`
+  `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`
+2. Include the TapForTap activity in Unity's AndroidManifest.xml  
+  `<activity android:name="com.tapfortap.TapForTapActivity"/>`
 
 Congratulations, you are done. You should now be able to call into the Tap for Tap library
 and begin displaying ads.
@@ -40,8 +41,50 @@ interstitals and app walls and set various optional information about your users
 to help us with targetting. Please make sure your privacy policy allows this
 before giving us their personal information.
 
+### Tap for Tap API
+
+#### public static void initialize(string apiKey)
+This must be called once before any other TapForTap calls can be made.
+
+Usage:
+
+```cs
+  TapForTap.initialize("MY API KEY");
+```
+
+#### public static void setAdViewListener(ITapForTapAdView listener)
+Sets the AdViewListener that will receive the callbacks. See [IAdViewListener](#IAdViewListener)
+
+Usage:
+
+```cs
+  TapForTap.setAdViewListener(myAdViewListener);
+```
+
+#### public static void setAppWallListener(ITapForTapAppWall listener) 
+#### public static void setInterstitiallListener(ITapForTapInterstitial listener) 
+
+#### public static void SetYearOfBirth(int yearOfBirth)
+#### public static void SetGender(TapForTapGender gender)
+#### public static void SetLocation(double latitude, double longitude)
+#### public static void SetUserAccountId(string userAccountId)
+
+#### public static void CreateAdView(TapForTapHorizontalAlignment horizontal, TapForTapVerticalAlignment vertical)
+#### public static void RemoveAdView()
+
+#### public static void ShowInterstitial()
+#### public static void PrepareInterstitial()
+
+#### public static void ShowAppWall()
+#### public static void PrepareAppWall()
+
+### <a id="IAdViewListener"></a>IAdViewListener
+
+### IAppWallListener
+
+### IInterstitialListener
+
 ======
-# Footer #
 
 ## [Back To Documentaion](http://tapfortap.github.com/Documentation/) ##
 
