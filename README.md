@@ -18,17 +18,25 @@ This Unity plugin was built and tested against Unity 3.5.
 If you don't have the plugin yet then head over to the [no link](need url).
 
 Installing the Tap for Tap Unity Plugin is easy. This isn't a Unity tutorial so we 
-assume that you have a Unity project already set up and working. All you need to 
-do is import the TapForTap.unitypackage into your app. Then follow the steps below
-for Android and iOS
+assume that you have a Unity project already set up and working. The first thing you
+need to do is import the TapForTap.unitypackage into your app. Then follow the steps 
+below for configuring iOS and Android.
 
 ### Configuring Tap for Tap for iOS
 When Xcode loads you will need to add the AdSupport framework to your build target.
-- Add the AdSupport framework.
+In the project explorer on the left side of Xcode 4:
+
+- Select your project from the very top.
+- Select your app's target.
+- Select the Build Phases tab.
+- Expand Link Binaries With Libraries.
+- Click the + button.
+- Select the AdSupport.framework
+- Click add
 
 ### Configuring Tap for Tap for Android
 A few additions need to be made to Unity's AndroidManifest.xml. If you do not
-have a custom manifest Unity recommends to create your own under the Assets/Plugins/Android folder ([Unity docs](http://docs.unity3d.com/Documentation/Manual/PluginsForAndroid.html)).
+have a custom manifest Unity recommends to create your own under the `Assets/Plugins/Android `folder ([Unity docs](http://docs.unity3d.com/Documentation/Manual/PluginsForAndroid.html)).
 Or you can edit the default manifest at
 `/Applications/Unity/Unity.app/Contents/PlaybackEngines/AndroidPlayer` for Mac OSX
  and `C:\Program Files\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\AndroidManifest.xml` for Windows.
@@ -55,22 +63,22 @@ found in the TapForTap class.
 ### Tap for Tap API
 
 #### public static void initialize(string apiKey)
-This must be called once at the start of the app before any other TapForTap calls
-can be made. It requires a Tap for Tap account API key which can be found by logging 
-into Tap for Tap and clicking the account button.
+This initializes Tap for Tap must be called once at the start of the app before 
+any other TapForTap calls can be made. It requires a Tap for Tap account API key
+which can be found by logging into Tap for Tap and clicking the account button.
 
 Usage:
 
 ```cs
-  // Initialize Tap for Tap
+  // Initialize Tap for Tap with my API key
   TapForTap.initialize("MY API KEY");
 ```
 
 #### public static void CreateAdView(TapForTapVerticalAlignment vertical, TapForTapHorizontalAlignment horizontal)
-Create a banner AdView of width 350dp and height 50dp at the desired screen location. 
-- **[TapForTapVerticalAlignment(#TapForTapVerticalAlignment)** is an enum that has the following values : TOP, CENTER, BOTTOM. 
+Create a banner ad view of width 350dp and height 50dp at the desired screen location. 
+- **[TapForTapVerticalAlignment](#TapForTapVerticalAlignment)** is an enum that has the following values : TOP, CENTER, BOTTOM. 
 - **[TapForTapHorizontalAlignment](TapForTapHorizontalAlignment)** is an enum that has the following values : LEFT, CENTER, RIGHT.
-- 
+
 By combining a vertical and horizontal alignment you can place an advertisement in 
 one of 9 places. A `*` denotes a location where an ad can be placed on the screen.
 <pre>
@@ -263,9 +271,8 @@ Usage:
 
 ### <a name="IAdViewListener"/>IAdViewListener
 An interface used to receive callbacks when the status of an AdView has changed.
-
 - **void OnTapAd(void)**
-  - called when a user tap's on an add
+  - called when a user taps on an add
 - **void OnReceiveAd(void)**
   - called when a ad is received
 - **OnFailedToReceiveAd(string reason)**
@@ -274,13 +281,13 @@ An interface used to receive callbacks when the status of an AdView has changed.
 ### <a name="IAppWallListener"/>IAppWallListener
 An interface used to receive callbacks when the status of an app wall has changed.
 
-- **void OnDismiss(void)
+- **void OnDismiss(void)**
   - Called when the app wall is dismissed
 
 ### <a name="IInterstitialListener"/>IInterstitialListener
 An interface used to receive callbacks when the status of an interstitial has changed.
 
-- **void OnDismiss(void)
+- **void OnDismiss(void)**
   - Called when the interstitial is dismissed
 
 ### <a name="TapForTapGender"/>TapForTapGender
