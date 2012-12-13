@@ -6,9 +6,13 @@ Want to use Tap for Tap with Unity? We got you covered on Android and iOS.
 This Unity plugin was built and tested against Unity 3.5.
 
 ### Minimum Requirements
+
+#### Android
+- None
+
 #### iPhone
-  - An OS X machine running Lion (10.7)
-  - iOS 6.0 SDK
+- An OS X machine running Lion (10.7)
+- iOS 6.0 SDK
 
 ## Integration
 If you don't have the plugin yet then head over to the [no link](need url).
@@ -19,17 +23,23 @@ do is import the TapForTap.unitypackage into your app. Then follow the steps bel
 for Android and iOS
 
 ### Configuring Tap for Tap for iOS
+When Xcode loads you will need to add the AdSupport framework to your build target.
 - Add the AdSupport framework.
 
 ### Configuring Tap for Tap for Android
-
-1. Add the following permissions Unity's AndroidManifest.xml
+A few additions need to be made to Unity's AndroidManifest.xml. If you do not
+have a custom manifest Unity recommends to create your own under the Assets/Plugins/Android folder ([Unity docs](http://docs.unity3d.com/Documentation/Manual/PluginsForAndroid.html)).
+Or you can edit the default manifest at
+`/Applications/Unity/Unity.app/Contents/PlaybackEngines/AndroidPlayer` for Mac OSX
+ and `C:\Program Files\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\AndroidManifest.xml` for Windows.
+ 
+1. Add the following permissions to the AndroidManifest.xml
   `<uses-permission android:name="android.permission.INTERNET" />`
   `<uses-permission android:name="android.permission.READ_PHONE_STATE" />`
   `<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />`
   `<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />`
   `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`
-2. Include the TapForTap activity in Unity's AndroidManifest.xml  
+2. Include the TapForTap activity in the AndroidManifest.xml  
   `<activity android:name="com.tapfortap.TapForTapActivity"/>`
 
 Congratulations, you are done. You should now be able to call into the Tap for Tap library
@@ -37,20 +47,101 @@ and begin displaying ads.
 
 ## API Documentation
 The C# API lets you create, place, and remove Tap for Tap ad views,
-interstitals and app walls and set various optional information about your users
-to help us with targetting. Please make sure your privacy policy allows this
-before giving us their personal information.
+show interstitals and app walls, and set various optional information about your users
+to help with targetting. Please make sure your privacy policy allows this
+before providing any personal information. All the API calls are static methods
+found in the TapForTap class.
 
 ### Tap for Tap API
 
 #### public static void initialize(string apiKey)
-This must be called once before any other TapForTap calls can be made.
+This must be called once at the start of the app before any other TapForTap calls
+can be made. It requires a Tap for Tap account API key which can be found by logging 
+into Tap for Tap and clicking the account button.
 
 Usage:
 
 ```cs
+  // Initialize Tap for Tap
   TapForTap.initialize("MY API KEY");
 ```
+
+#### public static void CreateAdView(TapForTapVerticalAlignment vertical, TapForTapHorizontalAlignment horizontal)
+Create a banner AdView of width 350dp and height 50dp at the desired screen location. 
+- **TapForTapVerticalAlignment** is an enum that has the following values : TOP, CENTER, BOTTOM. 
+- **TapForTapHorizontalAlignment** is an enum that has the following values : LEFT, CENTER, RIGHT.
+- 
+By combining a vertical and horizontal alignment you can place an advertisement in 
+one of 9 places. A `*` denotes a location where an ad can be placed on the screen.
+<pre>
+-----------  
+|*   *   *|   
+|         |   
+|*   *   *|   
+|         |   
+|*   *   *|   
+-----------   
+</pre>
+
+Usage:
+
+```cs
+  // Create an AdView at the bottom center of the screen
+  TapForTap.CreateAdView(TapForTapVerticalAlignment.BOTTOM, TapForTapHorizontalAlignment.CENTER)
+```
+
+#### public static void RemoveAdView()
+Remove any AdView that is currently being displayed.
+
+Usage:
+
+```cs
+  // Remove the currently displayed AdView
+  TapForTap.RemoveAdView();
+```
+
+#### public static void PrepareInterstitial()
+Prepare an interstital ad by prefetching the ad. This method only needs to be called once.
+After the interstitial is shown we automatically prepare another one.
+
+Usage:
+
+```cs
+  TapForTap.PrepareInterstitial();
+```
+
+#### public static void ShowInterstitial()
+Shows an interstitial ad.
+
+Usage:
+
+```cs
+  TapForTap.ShowInterstitial();
+```
+
+#### public static void PrepareAppWall()
+Prepare an app wall ad by prefetching the ad. This method only needs to be called once.
+After the app wall is shown we automatically prepare another one.
+
+Usage:
+
+```cs
+  TapForTap.PrepareAppWall();
+```
+
+#### public static void ShowAppWall()
+Show an app wall ad.
+
+Usage:
+
+```cs
+  TapForTap.ShowAppWall();
+```
+
+#### public static void SetYearOfBirth(int yearOfBirth)
+#### public static void SetGender(TapForTapGender gender)
+#### public static void SetLocation(double latitude, double longitude)
+#### public static void SetUserAccountId(string userAccountId)
 
 #### public static void setAdViewListener(ITapForTapAdView listener)
 Sets the listener that will receive the AdView callbacks. See [IAdViewListener](#IAdViewListener)
@@ -124,20 +215,6 @@ Usage:
   MyInterstitialListener myInterstitialListener = new MyInterstitialListener();
   TapForTap.setInterstitiallListener(myInterstitialListener);
 ```
-
-#### public static void SetYearOfBirth(int yearOfBirth)
-#### public static void SetGender(TapForTapGender gender)
-#### public static void SetLocation(double latitude, double longitude)
-#### public static void SetUserAccountId(string userAccountId)
-
-#### public static void CreateAdView(TapForTapHorizontalAlignment horizontal, TapForTapVerticalAlignment vertical)
-#### public static void RemoveAdView()
-
-#### public static void ShowInterstitial()
-#### public static void PrepareInterstitial()
-
-#### public static void ShowAppWall()
-#### public static void PrepareAppWall()
 
 ### <a name="IAdViewListener"/>IAdViewListener
 
