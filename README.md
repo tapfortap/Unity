@@ -53,17 +53,77 @@ Usage:
 ```
 
 #### public static void setAdViewListener(ITapForTapAdView listener)
-Sets the AdViewListener that will receive the callbacks. See [IAdViewListener](#IAdViewListener)
+Sets the listener that will receive the AdView callbacks. See [IAdViewListener](#IAdViewListener)
 for more details and available callback methods.
 
 Usage:
 
 ```cs
-  TapForTap.setAdViewListener(myAdViewListener);
+  // MyAdViewListener.cs
+  public class MyAdViewListener : ITapForTapAdView
+  {
+    public void OnTapAd()
+	  {
+		  Debug.Log("Called my OnTapAd);
+	  }
+    
+	  public void OnReceiveAd()
+	  {
+		  Debug.Log("Called my OnReceiveAd");
+	  }
+    
+	  public void OnFailToReceiveAd(string reason)
+	  {
+		  Debug.Log("Called my OnFailToReceiveAd because of " + reason);
+	  }
+  }
+
+  // MyTapForTap.cs
+  MyAdViewListener myAdViewListener = new MyAdViewListener();
+  TapForTap.setAdViewListener(MyAdViewListener);
 ```
 
-#### public static void setAppWallListener(ITapForTapAppWall listener) 
+#### public static void setAppWallListener(ITapForTapAppWall listener)
+Sets the listener that will receive the AppWall callbacks. See [IAppWallListener](#IAppWallListener)
+for more details and available callback methods.
+
+Usage:
+
+```cs
+  // MyAppWallListener.cs
+  public class MyAppWallListener : ITapForTapAppWall
+  {
+    public void onDismiss()
+    {
+      Debug.Log("Called my app wall listener OnDismiss");
+    }
+  }
+
+  // MyTapForTap.cs
+  MyAppWallListener myAppWallListener = new MyAppWallListener();
+  TapForTap.setAppWallListener(myAppWallListener);
+```
+
 #### public static void setInterstitiallListener(ITapForTapInterstitial listener) 
+Sets the listener that will receive the Interstitial callbacks. See [IInterstitialListener](#IInterstitialListener)
+for more details and available callback methods.
+
+Usage:
+
+```cs
+  // MyInterstitialListener.cs
+  public class MyInterstitialListener : ITapForTapInterstitial
+  {
+    public void onDismiss()
+    {
+      Debug.Log("Called my interstitial listener OnDismiss");
+    }
+  }
+
+  // MyTapForTap.cs
+  MyInterstitialListener myInterstitialListener = new MyInterstitialListener();
+  TapForTap.setInterstitiallListener(myInterstitialListener);
+```
 
 #### public static void SetYearOfBirth(int yearOfBirth)
 #### public static void SetGender(TapForTapGender gender)
@@ -79,11 +139,14 @@ Usage:
 #### public static void ShowAppWall()
 #### public static void PrepareAppWall()
 
-### IAdViewListener
+### <a name="IAdViewListener"/>IAdViewListener
 
-### IAppWallListener
+### <a name="IAppWallListener"/>IAppWallListener
 
-### IInterstitialListener
+### <a name="IInterstitialListener"/>IInterstitialListener
+
+### <a name="TapForTapHorizontalAlignment"/>TapForTapHorizontalAlignment
+### <a name="TapForTapVerticalAlignment"/>TapForTapVerticalAlignment
 
 ======
 
