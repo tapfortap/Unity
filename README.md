@@ -54,6 +54,7 @@ Usage:
 
 #### public static void setAdViewListener(ITapForTapAdView listener)
 Sets the AdViewListener that will receive the callbacks. See [IAdViewListener](#IAdViewListener)
+for more details and available callback methods.
 
 Usage:
 
@@ -78,7 +79,7 @@ Usage:
 #### public static void ShowAppWall()
 #### public static void PrepareAppWall()
 
-### <a id="IAdViewListener"></a>IAdViewListener
+### IAdViewListener
 
 ### IAppWallListener
 
