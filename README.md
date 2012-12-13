@@ -68,8 +68,8 @@ Usage:
 
 #### public static void CreateAdView(TapForTapVerticalAlignment vertical, TapForTapHorizontalAlignment horizontal)
 Create a banner AdView of width 350dp and height 50dp at the desired screen location. 
-- **TapForTapVerticalAlignment** is an enum that has the following values : TOP, CENTER, BOTTOM. 
-- **TapForTapHorizontalAlignment** is an enum that has the following values : LEFT, CENTER, RIGHT.
+- **[TapForTapVerticalAlignment(#TapForTapVerticalAlignment)** is an enum that has the following values : TOP, CENTER, BOTTOM. 
+- **[TapForTapHorizontalAlignment](TapForTapHorizontalAlignment)** is an enum that has the following values : LEFT, CENTER, RIGHT.
 - 
 By combining a vertical and horizontal alignment you can place an advertisement in 
 one of 9 places. A `*` denotes a location where an ad can be placed on the screen.
@@ -107,6 +107,7 @@ After the interstitial is shown we automatically prepare another one.
 Usage:
 
 ```cs
+  // Prepare an interstitial
   TapForTap.PrepareInterstitial();
 ```
 
@@ -116,6 +117,7 @@ Shows an interstitial ad.
 Usage:
 
 ```cs
+  // Show an insterstitial
   TapForTap.ShowInterstitial();
 ```
 
@@ -126,6 +128,7 @@ After the app wall is shown we automatically prepare another one.
 Usage:
 
 ```cs
+  // Prepare an app wall
   TapForTap.PrepareAppWall();
 ```
 
@@ -135,13 +138,55 @@ Show an app wall ad.
 Usage:
 
 ```cs
+  // Show an app wal
   TapForTap.ShowAppWall();
 ```
 
 #### public static void SetYearOfBirth(int yearOfBirth)
+Sets the user's year of birth. This is sent along with 
+ad requests and helps with matching.
+
+Usage:
+
+```cs
+  // Set the birth year to 1990
+  TapForTap.SetYearOfBirth(1990);
+```
+
 #### public static void SetGender(TapForTapGender gender)
+Sets the gender of the user. This is sent along with 
+ad requests and helps with matching.
+- [TapForTapGender](#TapForTapGender) is an enume that has the following values: MALE, FEMALE, NONE.
+
+Usage:
+
+```cs
+  // Set the Gender to male
+  TapForTap.SetGender(TapForTapGender.MALE);
+```
+
 #### public static void SetLocation(double latitude, double longitude)
+Sets the user's location This is sent along with ad requests.
+
+- **latitide** The latitude of the user
+- **longitude** The longitude of the user
+
+Usage:
+
+```cs
+  // Set the location (Around Brentwood Bay Vancouver Island)
+  TapForTap.SetLocation(48.571155273059546, -123.45268249511719);
+```
+
 #### public static void SetUserAccountId(string userAccountId)
+Sets a custom account id that you can use for your app. This is sent along with 
+ad requests and helps with matching.
+
+Usage:
+
+```cs
+  TapForTap.SetUserAccountId("My custom user account ID that I use");
+```
 
 #### public static void setAdViewListener(ITapForTapAdView listener)
 Sets the listener that will receive the AdView callbacks. See [IAdViewListener](#IAdViewListener)
@@ -217,13 +262,44 @@ Usage:
 ```
 
 ### <a name="IAdViewListener"/>IAdViewListener
+An interface used to receive callbacks when the status of an AdView has changed.
+
+- **void OnTapAd(void)**
+  - called when a user tap's on an add
+- **void OnReceiveAd(void)**
+  - called when a ad is received
+- **OnFailedToReceiveAd(string reason)**
+ - called when a request to get an add with a reason
 
 ### <a name="IAppWallListener"/>IAppWallListener
+An interface used to receive callbacks when the status of an app wall has changed.
+
+- **void OnDismiss(void)
+  - Called when the app wall is dismissed
 
 ### <a name="IInterstitialListener"/>IInterstitialListener
+An interface used to receive callbacks when the status of an interstitial has changed.
+
+- **void OnDismiss(void)
+  - Called when the interstitial is dismissed
+
+### <a name="TapForTapGender"/>TapForTapGender
+An enum used for setting the user's gender. Available value:
+- MALE
+- FEMALE
+- NONE
 
 ### <a name="TapForTapHorizontalAlignment"/>TapForTapHorizontalAlignment
+An enum used for determining the horizontal placement of an ad view. Available value:
+- LEFT
+- CENTER
+- RIGHT
+
 ### <a name="TapForTapVerticalAlignment"/>TapForTapVerticalAlignment
+An enum used for determining the vertical placement of an ad view. Available value:
+- TOP
+- CENTER
+- BOTTOM
 
 ======
 
