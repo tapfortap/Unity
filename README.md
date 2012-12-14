@@ -75,7 +75,7 @@ Usage:
 ```
 
 #### public static void CreateAdView(TapForTapVerticalAlignment vertical, TapForTapHorizontalAlignment horizontal)
-Create a banner ad view of width 350dp and height 50dp at the desired screen location. 
+Create a banner ad view of width 320dp and height 50dp at the desired screen location. 
 - **[TapForTapVerticalAlignment](#TapForTapVerticalAlignment)** is an enum that has the following values : TOP, CENTER, BOTTOM. 
 - **[TapForTapHorizontalAlignment](TapForTapHorizontalAlignment)** is an enum that has the following values : LEFT, CENTER, RIGHT.
 
