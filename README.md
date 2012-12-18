@@ -1,4 +1,4 @@
-# Tap for Tap Unity Plugin (Coming Soon!)
+# Tap for Tap Unity Plugin
 
 Want to use Tap for Tap with Unity? We got you covered on Android and iOS.
 
@@ -15,8 +15,6 @@ This Unity plugin was built and tested against Unity 3.5.
 - iOS 6.0 SDK
 
 ## Integration
-If you don't have the plugin yet then head over to the [no link](need url).
-
 Installing the Tap for Tap Unity Plugin is easy. This isn't a Unity tutorial so we 
 assume that you have a Unity project already set up and working. The first thing you
 need to do is import the TapForTap.unitypackage into your app. Then follow the steps 
