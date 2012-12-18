@@ -1,0 +1,431 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Unity by tapfortap</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Unity</h1>
+        <p>The Tap for Tap Unity Plugin</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/tapfortap/Unity" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/tapfortap/Unity/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/tapfortap/Unity/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>Tap for Tap Unity Plugin (Coming Soon!)</h1>
+
+<p>Want to use Tap for Tap with Unity? We got you covered on Android and iOS.</p>
+
+<h2>Preamble</h2>
+
+<p>This Unity plugin was built and tested against Unity 3.5.</p>
+
+<h3>Minimum Requirements</h3>
+
+<h4>Android</h4>
+
+<ul>
+<li>None</li>
+</ul><h4>iPhone</h4>
+
+<ul>
+<li>An OS X machine running Lion (10.7)</li>
+<li>iOS 6.0 SDK</li>
+</ul><h2>Integration</h2>
+
+<p>If you don't have the plugin yet then head over to the <a href="need%20url">no link</a>.</p>
+
+<p>Installing the Tap for Tap Unity Plugin is easy. This isn't a Unity tutorial so we 
+assume that you have a Unity project already set up and working. The first thing you
+need to do is import the TapForTap.unitypackage into your app. Then follow the steps 
+below for configuring iOS and Android.</p>
+
+<h3>Configuring Tap for Tap for iOS</h3>
+
+<p>When Xcode loads you will need to add the AdSupport framework to your build target.
+In the project explorer on the left side of Xcode 4:</p>
+
+<ul>
+<li>Select your project from the very top.</li>
+<li>Select your app's target.</li>
+<li>Select the Build Phases tab.</li>
+<li>Expand Link Binaries With Libraries.</li>
+<li>Click the + button.</li>
+<li>Select the AdSupport.framework</li>
+<li>Click add</li>
+</ul><h3>Configuring Tap for Tap for Android</h3>
+
+<p>A few additions need to be made to Unity's AndroidManifest.xml. If you do not
+have a custom manifest Unity recommends to create your own under the <code>Assets/Plugins/Android</code>folder (<a href="http://docs.unity3d.com/Documentation/Manual/PluginsForAndroid.html">Unity docs</a>).
+Or you can edit the default manifest at
+<code>/Applications/Unity/Unity.app/Contents/PlaybackEngines/AndroidPlayer</code> for Mac OSX
+ and <code>C:\Program Files\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\AndroidManifest.xml</code> for Windows.</p>
+
+<ol>
+<li>Add the following permissions to the AndroidManifest.xml
+<code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</code>
+<code>&lt;uses-permission android:name="android.permission.READ_PHONE_STATE" /&gt;</code>
+<code>&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;</code>
+<code>&lt;uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /&gt;</code>
+<code>&lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /&gt;</code>
+</li>
+<li>Include the TapForTap activity in the AndroidManifest.xml<br><code>&lt;activity android:name="com.tapfortap.TapForTapActivity"/&gt;</code>
+</li>
+</ol><p>Congratulations, you are done. You should now be able to call into the Tap for Tap library
+and begin displaying ads.</p>
+
+<h2>API Documentation</h2>
+
+<p>The C# API lets you create, place, and remove Tap for Tap ad views,
+show interstitals and app walls, and set various optional information about your users
+to help with targetting. Please make sure your privacy policy allows this
+before providing any personal information. All the API calls are static methods
+found in the TapForTap class.</p>
+
+<h3>Tap for Tap API</h3>
+
+<h4>public static void initialize(string apiKey)</h4>
+
+<p>This initializes Tap for Tap must be called once at the start of the app before 
+any other TapForTap calls can be made. It requires a Tap for Tap account API key
+which can be found by logging into Tap for Tap and clicking the account button.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Initialize Tap for Tap with my API key</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">initialize</span><span class="p">(</span><span class="s">"MY API KEY"</span><span class="p">);</span>
+</pre></div>
+
+<h4>public static void CreateAdView(TapForTapVerticalAlignment vertical, TapForTapHorizontalAlignment horizontal)</h4>
+
+<p>Create a banner ad view of width 320dp and height 50dp at the desired screen location. </p>
+
+<ul>
+<li>
+<strong><a href="#TapForTapVerticalAlignment">TapForTapVerticalAlignment</a></strong> is an enum that has the following values : TOP, CENTER, BOTTOM. </li>
+<li>
+<strong><a href="TapForTapHorizontalAlignment">TapForTapHorizontalAlignment</a></strong> is an enum that has the following values : LEFT, CENTER, RIGHT.</li>
+</ul><p>By combining a vertical and horizontal alignment you can place an advertisement in 
+one of 9 places. A <code>*</code> denotes a location where an ad can be placed on the screen.</p>
+
+<pre>
+-----------  
+|*   *   *|   
+|         |   
+|*   *   *|   
+|         |   
+|*   *   *|   
+-----------   
+</pre>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Create an AdView at the bottom center of the screen</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">CreateAdView</span><span class="p">(</span><span class="n">TapForTapVerticalAlignment</span><span class="p">.</span><span class="n">BOTTOM</span><span class="p">,</span> <span class="n">TapForTapHorizontalAlignment</span><span class="p">.</span><span class="n">CENTER</span><span class="p">)</span>
+</pre></div>
+
+<h4>public static void RemoveAdView()</h4>
+
+<p>Remove any AdView that is currently being displayed.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Remove the currently displayed AdView</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">RemoveAdView</span><span class="p">();</span>
+</pre></div>
+
+<h4>public static void PrepareInterstitial()</h4>
+
+<p>Prepare an interstital ad by prefetching the ad. This method only needs to be called once.
+After the interstitial is shown we automatically prepare another one.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Prepare an interstitial</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">PrepareInterstitial</span><span class="p">();</span>
+</pre></div>
+
+<h4>public static void ShowInterstitial()</h4>
+
+<p>Shows an interstitial ad.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Show an insterstitial</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">ShowInterstitial</span><span class="p">();</span>
+</pre></div>
+
+<h4>public static void PrepareAppWall()</h4>
+
+<p>Prepare an app wall ad by prefetching the ad. This method only needs to be called once.
+After the app wall is shown we automatically prepare another one.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Prepare an app wall</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">PrepareAppWall</span><span class="p">();</span>
+</pre></div>
+
+<h4>public static void ShowAppWall()</h4>
+
+<p>Show an app wall ad.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Show an app wal</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">ShowAppWall</span><span class="p">();</span>
+</pre></div>
+
+<h4>public static void SetYearOfBirth(int yearOfBirth)</h4>
+
+<p>Sets the user's year of birth. This is sent along with 
+ad requests and helps with matching.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Set the birth year to 1990</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">SetYearOfBirth</span><span class="p">(</span><span class="m">1990</span><span class="p">);</span>
+</pre></div>
+
+<h4>public static void SetGender(TapForTapGender gender)</h4>
+
+<p>Sets the gender of the user. This is sent along with 
+ad requests and helps with matching.</p>
+
+<ul>
+<li>
+<a href="#TapForTapGender">TapForTapGender</a> is an enume that has the following values: MALE, FEMALE, NONE.</li>
+</ul><p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Set the Gender to male</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">SetGender</span><span class="p">(</span><span class="n">TapForTapGender</span><span class="p">.</span><span class="n">MALE</span><span class="p">);</span>
+</pre></div>
+
+<h4>public static void SetLocation(double latitude, double longitude)</h4>
+
+<p>Sets the user's location This is sent along with ad requests.</p>
+
+<ul>
+<li>
+<strong>latitide</strong> The latitude of the user</li>
+<li>
+<strong>longitude</strong> The longitude of the user</li>
+</ul><p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// Set the location (Around Brentwood Bay Vancouver Island)</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">SetLocation</span><span class="p">(</span><span class="m">48.571155273059546</span><span class="p">,</span> <span class="p">-</span><span class="m">123.45268249511719</span><span class="p">);</span>
+</pre></div>
+
+<h4>public static void SetUserAccountId(string userAccountId)</h4>
+
+<p>Sets a custom account id that you can use for your app. This is sent along with 
+ad requests and helps with matching.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="n">TapForTap</span><span class="p">.</span><span class="n">SetUserAccountId</span><span class="p">(</span><span class="s">"My custom user account ID that I use"</span><span class="p">);</span>
+</pre></div>
+
+<h4>public static void setAdViewListener(ITapForTapAdView listener)</h4>
+
+<p>Sets the listener that will receive the AdView callbacks. See <a href="#IAdViewListener">IAdViewListener</a>
+for more details and available callback methods.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// MyAdViewListener.cs</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">MyAdViewListener</span> <span class="p">:</span> <span class="n">ITapForTapAdView</span>
+  <span class="p">{</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">OnTapAd</span><span class="p">()</span>
+      <span class="p">{</span>
+          <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">"Called my OnTapAd);</span>
+      <span class="p">}</span>
+
+      <span class="k">public</span> <span class="k">void</span> <span class="nf">OnReceiveAd</span><span class="p">()</span>
+      <span class="p">{</span>
+          <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">"Called my OnReceiveAd"</span><span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="k">public</span> <span class="k">void</span> <span class="nf">OnFailToReceiveAd</span><span class="p">(</span><span class="kt">string</span> <span class="n">reason</span><span class="p">)</span>
+      <span class="p">{</span>
+          <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">"Called my OnFailToReceiveAd because of "</span> <span class="p">+</span> <span class="n">reason</span><span class="p">);</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// MyTapForTap.cs</span>
+  <span class="n">MyAdViewListener</span> <span class="n">myAdViewListener</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MyAdViewListener</span><span class="p">();</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">setAdViewListener</span><span class="p">(</span><span class="n">MyAdViewListener</span><span class="p">);</span>
+</pre></div>
+
+<h4>public static void setAppWallListener(ITapForTapAppWall listener)</h4>
+
+<p>Sets the listener that will receive the AppWall callbacks. See <a href="#IAppWallListener">IAppWallListener</a>
+for more details and available callback methods.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// MyAppWallListener.cs</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">MyAppWallListener</span> <span class="p">:</span> <span class="n">ITapForTapAppWall</span>
+  <span class="p">{</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">onDismiss</span><span class="p">()</span>
+    <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">"Called my app wall listener OnDismiss"</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// MyTapForTap.cs</span>
+  <span class="n">MyAppWallListener</span> <span class="n">myAppWallListener</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MyAppWallListener</span><span class="p">();</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">setAppWallListener</span><span class="p">(</span><span class="n">myAppWallListener</span><span class="p">);</span>
+</pre></div>
+
+<h4>public static void setInterstitiallListener(ITapForTapInterstitial listener)</h4>
+
+<p>Sets the listener that will receive the Interstitial callbacks. See <a href="#IInterstitialListener">IInterstitialListener</a>
+for more details and available callback methods.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre>  <span class="c1">// MyInterstitialListener.cs</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">MyInterstitialListener</span> <span class="p">:</span> <span class="n">ITapForTapInterstitial</span>
+  <span class="p">{</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">onDismiss</span><span class="p">()</span>
+    <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">"Called my interstitial listener OnDismiss"</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// MyTapForTap.cs</span>
+  <span class="n">MyInterstitialListener</span> <span class="n">myInterstitialListener</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MyInterstitialListener</span><span class="p">();</span>
+  <span class="n">TapForTap</span><span class="p">.</span><span class="n">setInterstitiallListener</span><span class="p">(</span><span class="n">myInterstitialListener</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="IAdViewListener"></a>IAdViewListener</h3>
+
+<p>An interface used to receive callbacks when the status of an AdView has changed.</p>
+
+<ul>
+<li>
+<strong>void OnTapAd(void)</strong>
+
+<ul>
+<li>called when a user taps on an add</li>
+</ul>
+</li>
+<li>
+<strong>void OnReceiveAd(void)</strong>
+
+<ul>
+<li>called when a ad is received</li>
+</ul>
+</li>
+<li>
+<strong>OnFailedToReceiveAd(string reason)</strong>
+
+<ul>
+<li>called when a request to get an add with a reason</li>
+</ul>
+</li>
+</ul><h3>
+<a name="IAppWallListener"></a>IAppWallListener</h3>
+
+<p>An interface used to receive callbacks when the status of an app wall has changed.</p>
+
+<ul>
+<li>
+<strong>void OnDismiss(void)</strong>
+
+<ul>
+<li>Called when the app wall is dismissed</li>
+</ul>
+</li>
+</ul><h3>
+<a name="IInterstitialListener"></a>IInterstitialListener</h3>
+
+<p>An interface used to receive callbacks when the status of an interstitial has changed.</p>
+
+<ul>
+<li>
+<strong>void OnDismiss(void)</strong>
+
+<ul>
+<li>Called when the interstitial is dismissed</li>
+</ul>
+</li>
+</ul><h3>
+<a name="TapForTapGender"></a>TapForTapGender</h3>
+
+<p>An enum used for setting the user's gender. Available value:</p>
+
+<ul>
+<li>MALE</li>
+<li>FEMALE</li>
+<li>NONE</li>
+</ul><h3>
+<a name="TapForTapHorizontalAlignment"></a>TapForTapHorizontalAlignment</h3>
+
+<p>An enum used for determining the horizontal placement of an ad view. Available value:</p>
+
+<ul>
+<li>LEFT</li>
+<li>CENTER</li>
+<li>RIGHT</li>
+</ul><h3>
+<a name="TapForTapVerticalAlignment"></a>TapForTapVerticalAlignment</h3>
+
+<p>An enum used for determining the vertical placement of an ad view. Available value:</p>
+
+<ul>
+<li>TOP</li>
+<li>CENTER</li>
+<li>BOTTOM</li>
+</ul><h1></h1>
+
+<h2><a href="http://tapfortap.github.com/Documentation/">Back To Documentaion</a></h2>
+
+<h3><em>Support</em></h3>
+
+<p>Things don't always go according to plan. If you hit a snag somewhere and need a hand don't hesitate to get in touch with us at <a href="mailto:support@tapfortap.com">support@tapfortap.com</a> or on Zendesk <a href="https://tapfortap.zendesk.com/anonymous_requests/new">here</a>.</p>
+
+<h3><em>License</em></h3>
+
+<p>Licensed under the terms of the MIT License.</p>
+
+<p>Copyright © 2012 Tap for Tap Promotions Inc.</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/tapfortap">tapfortap</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
