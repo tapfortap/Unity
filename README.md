@@ -270,11 +270,11 @@ Usage:
 ### <a name="IAdViewListener"/>IAdViewListener
 An interface used to receive callbacks when the status of an AdView has changed.
 - **void OnTapAd(void)**
-  - called when a user taps on an add
+  - called when a user taps on an ad
 - **void OnReceiveAd(void)**
   - called when a ad is received
 - **OnFailedToReceiveAd(string reason)**
- - called when a request to get an add with a reason
+ - called when a request to get an ad failed with a reason
 
 ### <a name="IAppWallListener"/>IAppWallListener
 An interface used to receive callbacks when the status of an app wall has changed.
