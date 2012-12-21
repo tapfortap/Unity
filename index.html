@@ -52,7 +52,7 @@
 <h4>Android</h4>
 
 <ul>
-<li>None</li>
+<li>2.1.0 and up</li>
 </ul><h4>iPhone</h4>
 
 <ul>
@@ -87,14 +87,17 @@ Or you can edit the default manifest at
  and <code>C:\Program Files\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\AndroidManifest.xml</code> for Windows.</p>
 
 <ol>
-<li>Add the following permissions to the AndroidManifest.xml
-<code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</code>
+<li>Add the following permissions to the AndroidManifest.xml<br><code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</code>
 <code>&lt;uses-permission android:name="android.permission.READ_PHONE_STATE" /&gt;</code>
 <code>&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;</code>
 <code>&lt;uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /&gt;</code>
 <code>&lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /&gt;</code>
 </li>
 <li>Include the TapForTap activity in the AndroidManifest.xml<br><code>&lt;activity android:name="com.tapfortap.TapForTapActivity"/&gt;</code>
+</li>
+<li>Change the following line in the AndroidManifest.xml, setting the value to true. This makes it
+so that you can click on the banner ads (otherwise Unity swallows the click event)
+<code>&lt;meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="true" /&gt;</code>
 </li>
 </ol><p>Congratulations, you are done. You should now be able to call into the Tap for Tap library
 and begin displaying ads.</p>
