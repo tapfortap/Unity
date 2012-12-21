@@ -8,7 +8,7 @@ This Unity plugin was built and tested against Unity 3.5.
 ### Minimum Requirements
 
 #### Android
-- None
+- 2.1.0 and up
 
 #### iPhone
 - An OS X machine running Lion (10.7)
