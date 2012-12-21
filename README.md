@@ -39,7 +39,7 @@ Or you can edit the default manifest at
 `/Applications/Unity/Unity.app/Contents/PlaybackEngines/AndroidPlayer` for Mac OSX
  and `C:\Program Files\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\AndroidManifest.xml` for Windows.
  
-1. Add the following permissions to the AndroidManifest.xml
+1. Add the following permissions to the AndroidManifest.xml  
   `<uses-permission android:name="android.permission.INTERNET" />`
   `<uses-permission android:name="android.permission.READ_PHONE_STATE" />`
   `<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />`
@@ -47,6 +47,9 @@ Or you can edit the default manifest at
   `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`
 2. Include the TapForTap activity in the AndroidManifest.xml  
   `<activity android:name="com.tapfortap.TapForTapActivity"/>`
+3. Change the following line in the AndroidManifest.xml, setting the value to true. This makes it
+   so that you can click on the banner ads (otherwise Unity swallows the click event)
+   `<meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="true" />`
 
 Congratulations, you are done. You should now be able to call into the Tap for Tap library
 and begin displaying ads.
