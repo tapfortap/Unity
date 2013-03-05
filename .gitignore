@@ -1,0 +1,15 @@
+TapForTapUnity/build*
+TapForTapUnity/release
+
+test-app/Library*
+test-app/Temp*
+test-app/ProjectSettings*
+test-app/TapForTapTest*
+test-app/Assets/Plugins/Android/TapForTapUnity.jar
+
+*.apk
+*.userprefs
+
+repos*
+update_native_libraries
+export.log
