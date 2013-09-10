@@ -11,8 +11,8 @@ import android.util.DisplayMetrics;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.RelativeLayout;
 
-import com.tapfortap.AdView;
-import com.tapfortap.AdView.AdViewListener;
+import com.tapfortap.Banner;
+import com.tapfortap.Banner.BannerListener;
 import com.tapfortap.AppWall;
 import com.tapfortap.AppWall.AppWallListener;
 import com.tapfortap.Interstitial;
@@ -23,11 +23,11 @@ import com.unity3d.player.UnityPlayer;
 
 public class TapForTapUnity {
 
-	private static AdView adView;
+	private static Banner banner;
+	private static AppWall appWall;
+	private static Interstitial interstitial;
 	private static RelativeLayout layout;
-	private static AppWallListener appWallListener;
-	private static InterstitialListener interstitialListener;
-	
+
 	public static void setGender(int gender) {
 		switch(gender) {
 			case 0:
@@ -41,13 +41,13 @@ public class TapForTapUnity {
 				break;
 		}
 	}
-	
+
     public static void initializeWithApiKey(String apiKey) {
-        TapForTap.plugin = "unity";
-        TapForTap.pluginVersion = "1.2.0";
+        TapForTap.PLUGIN = "unity";
+        TapForTap.PLUGIN_VERSION = "1.3.0";
         TapForTap.initialize(UnityPlayer.currentActivity, apiKey);
     }
-    
+
 	public static void setLocation(double latitude, double longitude) {
 		Location location = new Location("");
 		location.setLatitude(latitude);
@@ -55,29 +55,31 @@ public class TapForTapUnity {
 		TapForTap.setLocation(location);
 	}
 
-	public static void createAdView(int horizontalAlignemnt, int verticalAlignment) {
-		removeAdView();
+	public static void createBanner(int horizontalAlignemnt, int verticalAlignment) {
+		removeBanner();
 		showAd(horizontalAlignemnt, verticalAlignment);
 	}
-	
+
 	private static void showAd(final int horizontalAlignemnt, final int verticalAlignment) {
 		UnityPlayer.currentActivity.runOnUiThread(new Runnable() {
 
 			@Override
 			public void run() {
-				
-				layout = new RelativeLayout(UnityPlayer.currentActivity);
-				RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-				UnityPlayer.currentActivity.addContentView(layout, layoutParams);
-			
-		    	
-		    	// Setup the adView
+
+				if (layout == null) {
+					layout = new RelativeLayout(UnityPlayer.currentActivity);
+					RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+					UnityPlayer.currentActivity.addContentView(layout, layoutParams);
+				}
+
+
+		    	// Setup the banner
 		        DisplayMetrics metrics = UnityPlayer.currentActivity.getResources().getDisplayMetrics();
 		        int width = (int)(320 * metrics.density);
 		        int height = (int) (50 * metrics.density);
 
 		        RelativeLayout.LayoutParams viewLayoutParams = new RelativeLayout.LayoutParams(width, height);
-		        
+
 		        switch(horizontalAlignemnt) {
 		        	case 1:
 		        		viewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -92,7 +94,7 @@ public class TapForTapUnity {
 		        		viewLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		        		break;
 		        }
-		        
+
 		        switch(verticalAlignment) {
 	        		case 1:
 		        		viewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -106,24 +108,23 @@ public class TapForTapUnity {
 		        	default:
 		        		viewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		        		break;
-		        		
+
 	        }
-		        adView = new AdView(UnityPlayer.currentActivity);
-				adView.setListener(getAdViewListener());
-		        adView.setLayoutParams(viewLayoutParams);
-		        
-		        layout.addView(adView);
+		        banner = Banner.create(UnityPlayer.currentActivity, getBannerListener());
+		        banner.setLayoutParams(viewLayoutParams);
+
+		        layout.addView(banner);
 			}
 		});
 	}
-	
-	public static void removeAdView() {
+
+	public static void removeBanner() {
 		UnityPlayer.currentActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(adView != null) {
-					adView.setListener(null);
-					adView = null;
+				if(banner != null) {
+					banner.setListener(null);
+					banner = null;
 				}
 				if(layout != null) {
 					layout.removeAllViews();
@@ -131,78 +132,105 @@ public class TapForTapUnity {
 			}
 		});
 	}
-	
-	private static AdViewListener getAdViewListener() {
-		return new AdViewListener() {
-			
+
+	private static BannerListener getBannerListener() {
+		return new BannerListener() {
+
 			@Override
-			public void onTapAd() {
-				UnityPlayer.UnitySendMessage("_TapForTap", "OnTapAd", "");
-			}
-			
-			@Override
-			public void onReceiveAd() {
+			public void bannerOnReceive(Banner banner) {
 				UnityPlayer.UnitySendMessage("_TapForTap", "OnReceiveAd", "");
-				
+
 			}
-			
+
 			@Override
-			public void onFailToReceiveAd(String reason) {
-				UnityPlayer.UnitySendMessage("_TapForTap", "OnFailToReceiveAd", reason);				
+			public void bannerOnFail(Banner banner, String reason, Throwable throwable) {
+				UnityPlayer.UnitySendMessage("_TapForTap", "OnFailToReceiveAd", reason);
+			}
+
+			@Override
+			public void bannerOnTap(Banner banner) {
+				UnityPlayer.UnitySendMessage("_TapForTap", "OnTapAd", "");
 			}
 		};
 	}
-	
+
 	public static void prepareAppWall() {
-		AppWall.prepare(UnityPlayer.currentActivity);
-		setAppWallListener();
+		getAppWall().load();
 	}
-	
+
 	public static void showAppWall() {
-		AppWall.show(UnityPlayer.currentActivity);
-		setAppWallListener();
+		getAppWall().show();
 	}
-	
-	public static void prepareInterstitial() {
-		Interstitial.prepare(UnityPlayer.currentActivity);
-		setInterstitialListener();
-	}
-	
-	public static void showInterstitial() {
-		Interstitial.show(UnityPlayer.currentActivity);
-		setInterstitialListener();
-	}
-	
-	synchronized private static void setAppWallListener() {
-		if(appWallListener == null ) {
-			appWallListener = new AppWallListener() {
+
+	private static synchronized AppWall getAppWall() {
+		if (appWall == null) {
+			appWall = AppWall.create(UnityPlayer.currentActivity, new AppWallListener() {
 				@Override
-				public void onDismiss() {
-					UnityPlayer.UnitySendMessage("_TapForTap", "OnAppWallDismissed", "");
+				public void appWallOnReceive(AppWall appWall) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnAppWallReceiveAd", "");
 				}
-                
-                @Override
-				public void onFail(String reason) {
+
+				@Override
+				public void appWallOnFail(AppWall appWall, String reason, Throwable throwable) {
 					UnityPlayer.UnitySendMessage("_TapForTap", "OnAppWallFailed", reason);
 				}
-			};
-			AppWall.setListener(appWallListener);
-		}
-	}
-	
-	synchronized private static void setInterstitialListener() {
-		if(interstitialListener == null ) {
-			interstitialListener = new InterstitialListener() {
+
 				@Override
-				public void onDismiss() {
-					UnityPlayer.UnitySendMessage("_TapForTap", "OnInterstitialDismissed", "");
+				public void appWallOnShow(AppWall appWall) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnAppWallShow", "");
 				}
-                @Override
-				public void onFail(String reason) {
+
+				@Override
+				public void appWallOnTap(AppWall appWall) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnAppWallTap", "");
+				}
+
+				@Override
+				public void appWallOnDismiss(AppWall appWall) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnAppWallDismissed", "");
+				}
+			});
+		}
+		return appWall;
+	}
+
+	public static void prepareInterstitial() {
+		getInterstitial().load();
+	}
+
+	public static void showInterstitial() {
+		getInterstitial().show();
+	}
+
+	private static synchronized Interstitial getInterstitial() {
+		if (interstitial == null) {
+			interstitial = Interstitial.create(UnityPlayer.currentActivity, new InterstitialListener() {
+				@Override
+				public void interstitialOnReceive(Interstitial interstitial) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnInterstitialReceiveAd", "");
+				}
+
+				@Override
+				public void interstitialOnFail(Interstitial interstitial, String reason, Throwable throwable) {
 					UnityPlayer.UnitySendMessage("_TapForTap", "OnInterstitialFailed", reason);
 				}
-			};
-			Interstitial.setListener(interstitialListener);
+
+				@Override
+				public void interstitialOnShow(Interstitial interstitial) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnInterstitialShow", "");
+				}
+
+				@Override
+				public void interstitialOnTap(Interstitial interstitial) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnInterstitialTap", "");
+				}
+
+				@Override
+				public void interstitialOnDismiss(Interstitial interstitial) {
+					UnityPlayer.UnitySendMessage("_TapForTap", "OnInterstitialDismissed", "");
+				}
+			});
 		}
+		return interstitial;
 	}
 }
