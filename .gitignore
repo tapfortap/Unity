@@ -11,5 +11,5 @@ test-app/Assets/Plugins/Android/TapForTapUnity.jar
 *.userprefs
 
 repos*
-update_native_libraries
+update_native_libraries.sh
 export.log
