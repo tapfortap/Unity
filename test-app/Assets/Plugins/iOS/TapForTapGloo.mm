@@ -4,139 +4,157 @@
  * Copyright (c) 2013 Tap for Tap
  */
 
-#import "TapForTap.h"
+#import "TFTTapForTap.h"
 
 extern UIViewController* UnityGetGLViewController();
 
 UIViewController* applicationViewController = nil;
 UIView* applicationView = nil;
 
-@interface TapForTapUnityAdViewDelegate : NSObject <TapForTapAdViewDelegate>
+@interface TFTUnityBannerDelegate : NSObject <TFTBannerDelegate>
 @end
 
-@implementation TapForTapUnityAdViewDelegate
+@implementation TFTUnityBannerDelegate
 
-- (UIViewController *) rootViewController {
-    return applicationViewController;
-}
-
-- (void) tapForTapAdViewWasTapped: (TapForTapAdView *)adView {
-    UnitySendMessage("_TapForTap", "OnTapAd", "");
-}
-
-- (void) tapForTapAdViewDidReceiveAd: (TapForTapAdView *)adView {
+- (void) tftBannerDidReceiveAd:(TFTBanner *)banner {
     UnitySendMessage("_TapForTap", "OnReceiveAd", "");
 }
 
-- (void) tapForTapAdView: (TapForTapAdView *)adView didFailToReceiveAd: (NSString *)reason {
+- (void) tftBanner:(TFTBanner *)banner didFail:(NSString *)reason {
     UnitySendMessage("_TapForTap", "OnFailToReceiveAd", [reason cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
-@end
-
-@interface TapForTapUnityAppWallDelegate : NSObject <TapForTapAppWallDelegate>
-@end
-
-@implementation TapForTapUnityAppWallDelegate
-
-- (void) tapForTapAppWallWasDismissed {
-    UnitySendMessage("_TapForTap", "OnAppWallDismissed", "");
+- (void) tftBannerWasTapped:(TFTBanner *)banner {
+    UnitySendMessage("_TapForTap", "OnTapAd", "");
 }
 
-- (void) tapForTapAppWallFailedToDownload: (NSString *) reason {
+@end
+
+@interface TFTUnityAppWallDelegate : NSObject <TFTAppWallDelegate>
+@end
+
+@implementation TFTUnityAppWallDelegate
+
+- (void)tftAppWallDidReceiveAd:(TFTAppWall *)interstitial {
+    UnitySendMessage("_TapForTap", "OnAppWallReceiveAd", "");
+}
+
+- (void) tftAppWall:(TFTAppWall *)appWall didFail:(NSString *)reason {
     UnitySendMessage("_TapForTap", "OnAppWallFailed", [reason cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
-@end
-
-@interface TapForTapUnityInterstitialDelegate : NSObject <TapForTapInterstitialDelegate>
-@end
-
-@implementation TapForTapUnityInterstitialDelegate
-
-- (void) tapForTapInterstitialWasDismissed {
-    UnitySendMessage("_TapForTap", "OnInterstitialDismissed", "");
+- (void)tftAppWallDidShow:(TFTAppWall *)appWall {
+    UnitySendMessage("_TapForTap", "OnAppWallShow", "");
 }
 
-- (void) tapForTapInterstitialFailedToDownload: (NSString *) reason {
+- (void)tftAppWallWasTapped:(TFTAppWall *)appWall {
+    UnitySendMessage("_TapForTap", "OnAppWallTap", "");
+}
+
+- (void) tftAppWallWasDismissed:(TFTAppWall *)appWall {
+    UnitySendMessage("_TapForTap", "OnAppWallDismissed", "");
+}
+
+@end
+
+@interface TFTUnityInterstitialDelegate : NSObject <TFTInterstitialDelegate>
+@end
+
+@implementation TFTUnityInterstitialDelegate
+
+- (void)tftInterstitialDidReceiveAd:(TFTInterstitial *)interstitial {
+    UnitySendMessage("_TapForTap", "OnInterstitialReceiveAd", "");
+}
+
+- (void) tftInterstitial:(TFTInterstitial *)interstitial didFail:(NSString *)reason {
     UnitySendMessage("_TapForTap", "OnInterstitialFailed", [reason cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
+- (void)tftInterstitialDidShow:(TFTInterstitial *)interstitial {
+    UnitySendMessage("_TapForTap", "OnInterstitialShow", "");
+}
+
+- (void)tftInterstitialWasTapped:(TFTInterstitial *)interstitial {
+    UnitySendMessage("_TapForTap", "OnInterstitialTap", "");
+}
+
+- (void) tftInterstitialWasDismissed:(TFTInterstitial *)interstitial {
+    UnitySendMessage("_TapForTap", "OnInterstitialDismissed", "");
+}
+
 @end
 
-TapForTapAdView* adView = nil;
-TapForTapUnityAdViewDelegate* adViewDelegate = nil;
-TapForTapUnityAppWallDelegate* appWallDelegate = nil;
-TapForTapUnityInterstitialDelegate* interstitialDelegate = nil;
-
+TFTBanner *banner = nil;
+TFTInterstitial *interstitial = nil;
+TFTAppWall *appWall = nil;
 
 extern "C" void initializeWithApiKey(char* apiKeyArray) {
-    
+
     applicationView = UnityGetGLViewController().view;
     applicationViewController = UnityGetGLViewController();
-    
+
     NSString* apiKey = [NSString stringWithUTF8String:apiKeyArray];
-    
-    [TapForTap performSelector: @selector(_setPlugin:) withObject: @"unity"];
-    [TapForTap performSelector: @selector(_setPluginVersion:) withObject: @"1.2.0"];
-    
-    [TapForTap initializeWithAPIKey:apiKey];
+
+    [TFTTapForTap performSelector: @selector(setPlugin:) withObject: @"unity"];
+    [TFTTapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.2.0"];
+
+    [TFTTapForTap initializeWithAPIKey:apiKey];
 }
 
 extern "C" void setYearOfBirth(uint32_t yearOfBirth) {
-    [TapForTap setYearOfBirth:yearOfBirth];
+    [TFTTapForTap setYearOfBirth:yearOfBirth];
 }
 
 extern "C" void setGender(uint32_t gender) {
     if (gender == 0)
     {
-        [TapForTap setGender:MALE];
+        [TFTTapForTap setGender:MALE];
     } else if(gender == 1)
     {
-        [TapForTap setGender:FEMALE];
+        [TFTTapForTap setGender:FEMALE];
     } else
     {
-        [TapForTap setGender:NONE];
+        [TFTTapForTap setGender:NONE];
     }
 }
 
 extern "C" void setLocation(double_t latitudeDouble, double_t longitudeDouble) {
     CLLocationDegrees latitude = latitudeDouble;
     CLLocationDegrees longitude = longitudeDouble;
-    
+
     CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-    
-    [TapForTap setLocation:location];
-    
+
+    [TFTTapForTap setLocation:location];
+
     [location release];
 }
 
 extern "C" void setUserAccountId(char* userAccountIdArray) {
     NSString* userAcountId = [NSString stringWithUTF8String:userAccountIdArray];
-    [TapForTap setUserAccountID:userAcountId];
+    [TFTTapForTap setUserAccountId:userAcountId];
 }
 
 extern "C" void setMode(char* modeArray) {
     NSString* mode = [NSString stringWithUTF8String:modeArray];
     if ([mode isEqualToString:@"development"])
     {
-        [TapForTap performSelector: @selector(_setEnvironment:) withObject: @"development"];
+        [TFTTapForTap performSelector: @selector(setEnvironment:) withObject: @"development"];
     }
-    
+
 }
 
 void showAd(uint32_t horiztonalAligment, uint32_t verticalAlignment) {
-    
+
     CGRect rect = [applicationView bounds];
     float viewHeight = rect.size.height;
     float viewWidth = rect.size.width;
-    
+
     uint32_t width = 320;
     uint32_t height = 50;
-    
+
     uint32_t xCoordinate = 0;
     uint32_t yCoordinate = 0;
-    
+
     switch (horiztonalAligment) {
         case 1:
             xCoordinate = 0;
@@ -151,7 +169,7 @@ void showAd(uint32_t horiztonalAligment, uint32_t verticalAlignment) {
             xCoordinate = (viewWidth - width) / 2;
             break;
     }
-    
+
     switch (verticalAlignment) {
         case 1:
             yCoordinate = 0;
@@ -166,21 +184,16 @@ void showAd(uint32_t horiztonalAligment, uint32_t verticalAlignment) {
             yCoordinate = (viewHeight - height);
             break;
     }
-    
-    adView = [[TapForTapAdView alloc] initWithFrame:CGRectMake(xCoordinate, yCoordinate, width, height)];
-    adViewDelegate = [[TapForTapUnityAdViewDelegate alloc] init];
-    [adView setDelegate:adViewDelegate];
-    [applicationView addSubview: adView];
+
+    banner = [TFTBanner bannerWithFrame:CGRectMake(xCoordinate, yCoordinate, width, height) delegate:[[TFTUnityBannerDelegate alloc] init]];
+    [applicationView addSubview: banner];
 }
 
 
 extern "C" void removeAdView() {
-    [adView stopLoadingAds];
-    [adView removeFromSuperview];
-    [adView release];
-    [adViewDelegate release];
-    adViewDelegate = nil;
-    adView = nil;
+    [banner stopShowingAds];
+    [banner removeFromSuperview];
+    banner.delegate = nil;
 }
 
 extern "C" void createAdView(uint32_t horiztonalAligment, uint32_t verticalAlignment) {
@@ -188,43 +201,41 @@ extern "C" void createAdView(uint32_t horiztonalAligment, uint32_t verticalAlign
     showAd(horiztonalAligment, verticalAlignment);
 }
 
-void setInterstitialDelegate(void) {
-    if(interstitialDelegate == nil) {
-        interstitialDelegate = [[TapForTapUnityInterstitialDelegate alloc] init];
-        [TapForTapInterstitial setDelegate: interstitialDelegate];
+TFTInterstitial* getInterstitial() {
+    if (interstitial == nil) {
+        interstitial = [TFTInterstitial interstitialWithDelegate:[[TFTUnityInterstitialDelegate alloc] init]];
     }
+    return interstitial;
 }
 
 extern "C" void prepareInterstitial(void) {
-    [TapForTapInterstitial prepare];
-    setInterstitialDelegate();
+    [getInterstitial() load];
 }
 
 extern "C" void showInterstitial(void) {
-    UIViewController *applicationViewController = applicationViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    [TapForTapInterstitial showWithRootViewController:applicationViewController];
-    setInterstitialDelegate();
+    UIViewController *vc = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    [getInterstitial() showWithViewController:vc];
 }
 
-void setAppWallDelegate(void) {
-    if(appWallDelegate == nil) {
-        appWallDelegate = [[TapForTapUnityAppWallDelegate alloc] init];
-        [TapForTapAppWall setDelegate: appWallDelegate];
+TFTAppWall* getAppWall() {
+    if (appWall == nil) {
+        appWall = [TFTAppWall appWallWithDelegate:[[TFTUnityAppWallDelegate alloc] init]];
     }
+    return appWall;
 }
 
 extern "C" void prepareAppWall(void) {
-    [TapForTapAppWall prepare];
-    setAppWallDelegate();
+    [getAppWall() load];
 }
 
 
 extern "C" void showAppWall(void) {
-    UIViewController *applicationViewController = applicationViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    [TapForTapAppWall showWithRootViewController:applicationViewController];
-    setAppWallDelegate();
+    UIViewController *vc = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    [getAppWall() showWithViewController:vc];
 }
 
 extern "C" void dipose() {
     removeAdView();
+    interstitial = nil;
+    appWall = nil;
 }
