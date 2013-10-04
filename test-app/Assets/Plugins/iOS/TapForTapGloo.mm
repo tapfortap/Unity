@@ -185,7 +185,7 @@ void showAd(uint32_t horiztonalAligment, uint32_t verticalAlignment) {
             break;
     }
 
-    banner = [TFTBanner bannerWithFrame:CGRectMake(xCoordinate, yCoordinate, width, height) delegate:[[TFTUnityBannerDelegate alloc] init]];
+    banner = [[TFTBanner bannerWithFrame:CGRectMake(xCoordinate, yCoordinate, width, height) delegate:[[TFTUnityBannerDelegate alloc] init]] retain];
     [applicationView addSubview: banner];
 }
 
@@ -194,6 +194,8 @@ extern "C" void removeAdView() {
     [banner stopShowingAds];
     [banner removeFromSuperview];
     banner.delegate = nil;
+    [banner release];
+    banner = nil;
 }
 
 extern "C" void createAdView(uint32_t horiztonalAligment, uint32_t verticalAlignment) {
@@ -203,7 +205,7 @@ extern "C" void createAdView(uint32_t horiztonalAligment, uint32_t verticalAlign
 
 TFTInterstitial* getInterstitial() {
     if (interstitial == nil) {
-        interstitial = [TFTInterstitial interstitialWithDelegate:[[TFTUnityInterstitialDelegate alloc] init]];
+        interstitial = [[TFTInterstitial interstitialWithDelegate:[[TFTUnityInterstitialDelegate alloc] init]] retain];
     }
     return interstitial;
 }
@@ -219,7 +221,7 @@ extern "C" void showInterstitial(void) {
 
 TFTAppWall* getAppWall() {
     if (appWall == nil) {
-        appWall = [TFTAppWall appWallWithDelegate:[[TFTUnityAppWallDelegate alloc] init]];
+        appWall = [[TFTAppWall appWallWithDelegate:[[TFTUnityAppWallDelegate alloc] init]] retain];
     }
     return appWall;
 }
@@ -236,6 +238,8 @@ extern "C" void showAppWall(void) {
 
 extern "C" void dipose() {
     removeAdView();
+    [interstitial release];
+    [appWall release];
     interstitial = nil;
     appWall = nil;
 }
