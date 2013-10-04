@@ -116,6 +116,24 @@ public class TapForTap : MonoBehaviour
         tft.PrepareInterstitial ();    
     }
     
+	public void OnInterstitialReceiveAd () {
+		if (interstitialListener != null) {
+            interstitialListener.OnReceive();
+        }
+	}
+
+	public void OnInterstitialShow () {
+		if (interstitialListener != null) {
+            interstitialListener.OnShow();
+        }
+	}
+
+	public void OnInterstitialTap () {
+		if (interstitialListener != null) {
+            interstitialListener.OnTap();
+        }
+	}
+
     public void OnInterstitialDismissed ()
     {
         if (interstitialListener != null) {
@@ -140,6 +158,24 @@ public class TapForTap : MonoBehaviour
         tft.PrepareAppWall ();    
     }
     
+	public void OnAppWallReceiveAd () {
+		if (interstitialListener != null) {
+            interstitialListener.OnReceive();
+        }
+	}
+
+	public void OnAppWallShow () {
+		if (interstitialListener != null) {
+            interstitialListener.OnShow();
+        }
+	}
+
+	public void OnAppWallTap () {
+		if (interstitialListener != null) {
+            interstitialListener.OnTap();
+        }
+	}
+
     public void OnAppWallDismissed ()
     {
         if (appWallListener != null) {

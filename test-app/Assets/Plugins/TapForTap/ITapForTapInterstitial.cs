@@ -6,6 +6,9 @@
 
 public interface ITapForTapInterstitial
 {
+	void OnReceive();
+	void OnShow();
+	void OnTap();
     void OnDismiss ();
 	void OnFail (string reason);
 }
