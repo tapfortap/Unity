@@ -11,7 +11,7 @@ var showCorners = false;
 
 function Start ()
     {
-        TapForTap.initialize ("acb9e550dda1679b29401d26edb4f23b");
+        TapForTap.initialize ("YOUR API KEY");
         
         TapForTap.SetYearOfBirth (1990);
         TapForTap.SetGender (TapForTapGender.MALE);
