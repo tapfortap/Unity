@@ -79,7 +79,7 @@ public class TapForTapAndroid : ITapForTap
     public void SetMode (string mode)
     {
         AndroidJavaClass tft = new AndroidJavaClass ("com.tapfortap.TapForTap");
-        tft.SetStatic<string> ("environment", mode);
+        tft.CallStatic ("setEnvironment", mode);
     }
     
     private static AndroidJavaObject getContext ()

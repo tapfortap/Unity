@@ -26,6 +26,19 @@ public class TapForTap : MonoBehaviour
             tft.InitializeWithApiKey (apiKey);
         }        
     }
+
+	public static void initialize (string apiKey, string mode)
+    {
+        if (tapForTap == null) {
+            GameObject go = new GameObject ("_TapForTap");
+            go.hideFlags = HideFlags.HideAndDontSave;
+            DontDestroyOnLoad (go);
+            tapForTap = go.AddComponent<TapForTap> ();
+            tft = TapForTapFactory.createTapForTap ();
+			tft.SetMode(mode);
+            tft.InitializeWithApiKey (apiKey);
+        }
+    }
     
     public static void setAdViewListener (ITapForTapAdView listener)
     {
