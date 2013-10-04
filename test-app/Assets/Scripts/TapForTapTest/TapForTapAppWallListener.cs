@@ -10,15 +10,27 @@ public class TapForTapAppWallListener : ITapForTapAppWall
 {
     bool dismissed = true;
     
+	public void OnReceive () {
+		Debug.Log ("Called my AppWall OnReceive");
+	}
+
+	public void OnShow () {
+		Debug.Log ("Called my AppWall OnShow");
+	}
+
+	public void OnTap() {
+		Debug.Log ("Called my AppWall OnTap");
+	}
+
     public void OnDismiss ()
     {
-        Debug.LogError ("Called my AppWall OnDismiss");
+        Debug.Log ("Called my AppWall OnDismiss");
         dismissed = true;
     }
 	
 	public void OnFail (string reason)
     {
-        Debug.LogError ("Failed to download AppWall because:" + reason);
+        Debug.Log ("Failed to download AppWall because:" + reason);
         dismissed = true;
     }
     

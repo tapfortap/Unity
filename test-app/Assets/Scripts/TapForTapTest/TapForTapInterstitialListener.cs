@@ -10,6 +10,18 @@ public class TapForTapInterstitialListener : ITapForTapInterstitial
 {
     bool dismissed = true;
     
+	public void OnReceive () {
+		Debug.Log ("Called my Interstitial OnReceive");
+	}
+
+	public void OnShow () {
+		Debug.Log ("Called my Interstitial OnShow");
+	}
+
+	public void OnTap() {
+		Debug.Log ("Called my Interstitial OnTap");
+	}
+
     public void OnDismiss ()
     {
         Debug.Log ("Called my Interstitial OnDismiss");
