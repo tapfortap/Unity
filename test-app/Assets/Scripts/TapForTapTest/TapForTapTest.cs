@@ -34,7 +34,7 @@ public class TapForTapTest : MonoBehaviour
         TapForTap.SetLocation (1.23, 4.56);
         TapForTap.SetUserAccountId ("My test user account id");
         
-        InvokeRepeating ("UpdateAds", 0.0f, 3.0f);
+        InvokeRepeating ("UpdateAds", 0.0f, 10.0f);
     }
     
     public void UpdateAds ()
