@@ -7,7 +7,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class TapForTap : MonoBehaviour, ITapForTapAdView
+public class TapForTap : MonoBehaviour
 {
     private static ITapForTap tft;
     private static TapForTap tapForTap;
