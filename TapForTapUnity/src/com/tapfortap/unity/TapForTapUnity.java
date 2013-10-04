@@ -21,6 +21,8 @@ import com.tapfortap.TapForTap;
 import com.tapfortap.TapForTap.Gender;
 import com.unity3d.player.UnityPlayer;
 
+import android.util.Log;
+
 public class TapForTapUnity {
 
 	private static Banner banner;
@@ -55,8 +57,8 @@ public class TapForTapUnity {
 		TapForTap.setLocation(location);
 	}
 
-	public static void createBanner(int horizontalAlignemnt, int verticalAlignment) {
-		removeBanner();
+	public static void createAdView(int horizontalAlignemnt, int verticalAlignment) {
+		removeAdView();
 		showAd(horizontalAlignemnt, verticalAlignment);
 	}
 
@@ -71,7 +73,6 @@ public class TapForTapUnity {
 					RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 					UnityPlayer.currentActivity.addContentView(layout, layoutParams);
 				}
-
 
 		    	// Setup the banner
 		        DisplayMetrics metrics = UnityPlayer.currentActivity.getResources().getDisplayMetrics();
@@ -110,6 +111,7 @@ public class TapForTapUnity {
 		        		break;
 
 	        }
+	        	removeAdView();
 		        banner = Banner.create(UnityPlayer.currentActivity, getBannerListener());
 		        banner.setLayoutParams(viewLayoutParams);
 
@@ -118,7 +120,7 @@ public class TapForTapUnity {
 		});
 	}
 
-	public static void removeBanner() {
+	public static void removeAdView() {
 		UnityPlayer.currentActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
