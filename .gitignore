@@ -6,6 +6,7 @@ test-app/Temp*
 test-app/ProjectSettings*
 test-app/TapForTapTest*
 test-app/Assets/Plugins/Android/TapForTapUnity.jar
+test-app/Assets/AssetStore*
 
 *.apk
 *.userprefs
