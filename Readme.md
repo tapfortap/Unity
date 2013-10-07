@@ -22,11 +22,11 @@ export UNITY_SDK="PATH TO YOUR UNITY SDK" (ie. /Applications/Unity/)
 ### General
 - Add three new callbacks to app-walls and interstitials
   - OnReceive
-    - Called when a new ad is finished downloading
+      - Called when a new ad is finished downloading
   - OnShow
-  	- Called when an ad is shown
+  	  - Called when an ad is shown
   - On Tap
-  	- Called when the user taps the ad
+  	  - Called when the user taps the ad
 
 ### Android
 - Update TapForTap.jar to 3.0.5
