@@ -1,6 +1,8 @@
 #!/bin/sh
 
-VERSION="1.2.0"
+set -x
+
+VERSION="1.3.0"
 UNITY_BIN="/Applications/Unity/Unity.app/Contents/MacOS"
 
 cd "$(dirname $0)"
