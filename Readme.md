@@ -17,6 +17,8 @@ Set the following environment variables:
 ### Unity
 export UNITY_SDK="PATH TO YOUR UNITY SDK" (ie. /Applications/Unity/)
 
+Run release.sh
+
 1.3.0 / 2013-03-05
 ==================
 ### General
