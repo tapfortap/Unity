@@ -5,19 +5,17 @@ For more information about Tap for Tap visit [http://www.tapfortap.com](http://w
 For documentation on how to use the Unity plugin visit the [Tap for Tap documentation portal](http://tapfortap.com/documentation/Unity).
 
 # Unity  Build Instructions 
-Set the following environment variables:
 
-### For Android
-- ANDROID_SDK="PATH TO ANDROID SDK" (ie. /usr/local/android/) 
-- ANDROID_TARGET="ANDROID TARGET SDK" (ie. 17)
-
-### For iOS
-- IOS_TARGET="IPHONE TARGET SDK" (ie iphoneos6.1)
-
-### Unity
-export UNITY_SDK="PATH TO YOUR UNITY SDK" (ie. /Applications/Unity/)
-
-Run release.sh
+1. Install Unity
+2. Set the following environment variables:
+  - For Android
+      - `ANDROID_SDK="PATH TO ANDROID SDK"` (ie. `/usr/local/android/`) 
+      - `ANDROID_TARGET="ANDROID TARGET SDK"` (ie. `17`)
+  - For iOS
+      - `IOS_TARGET="IPHONE TARGET SDK"` (ie. `iphoneos6.1`)
+  - For Unity
+      - `UNITY_SDK="PATH TO YOUR UNITY SDK"` (ie. `/Applications/Unity/`)
+3. Run `release.sh`
 
 1.3.0 / 2013-03-05
 ==================
