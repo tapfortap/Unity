@@ -2,7 +2,7 @@
 
 For more information about Tap for Tap visit [https://tapfortap.com](https://tapfortap.com)
 
-For documentation on how to use the Unity plugin visit the [Tap for Tap documentation portal](https://tapfortap.com/doc/plugins/Unity).
+For documentation on how to use the Unity plugin visit the [Tap for Tap documentation portal](https://tapfortap.com/doc/plugins/unity).
 
 # Unity  Build Instructions 
 
