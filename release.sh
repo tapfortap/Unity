@@ -2,7 +2,7 @@
 
 set -x
 
-VERSION="1.3.0"
+VERSION="1.3.1"
 UNITY_BIN="$UNITY_SDK/Unity.app/Contents/MacOS"
 
 cd "$(dirname $0)"
