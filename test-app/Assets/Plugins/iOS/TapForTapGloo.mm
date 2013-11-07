@@ -96,7 +96,7 @@ extern "C" void initializeWithApiKey(char* apiKeyArray) {
     NSString* apiKey = [NSString stringWithUTF8String:apiKeyArray];
 
     [TFTTapForTap performSelector: @selector(setPlugin:) withObject: @"unity"];
-    [TFTTapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.3.0"];
+    [TFTTapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.3.1"];
 
     [TFTTapForTap initializeWithAPIKey:apiKey];
 }
