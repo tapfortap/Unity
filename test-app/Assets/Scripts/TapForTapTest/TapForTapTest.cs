@@ -17,7 +17,7 @@ public class TapForTapTest : MonoBehaviour
     
     public void Start ()
     {
-        TapForTap.initialize ("YOUR API KEY");
+		TapForTap.initialize ("3d323e6d58c83e06dba2547ec54f8afc");
         
         TapForTap.setAdViewListener (new TapForTapAdViewListener ());
         
