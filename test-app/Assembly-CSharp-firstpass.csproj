@@ -58,6 +58,7 @@
      <Compile Include="Assets\Plugins\TapForTap\TapForTapNull.cs" />
      <Compile Include="Assets\Plugins\TapForTap\TapForTapVerticalAlignment.cs" />
      <Compile Include="Assets\Plugins\TapForTap\TapForTapiOS.cs" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

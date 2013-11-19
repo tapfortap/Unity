@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\TapForTapTest\TapForTapAppWallListener.cs" />
      <Compile Include="Assets\Scripts\TapForTapTest\TapForTapInterstitialListener.cs" />
      <Compile Include="Assets\Scripts\TapForTapTest\TapForTapTest.cs" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
