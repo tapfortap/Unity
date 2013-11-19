@@ -1,32 +1,32 @@
 # Tap for Tap Unity Plugin
 
-For more information about Tap for Tap visit [http://www.tapfortap.com](http://www.tapfortap.com)
+For more information about Tap for Tap visit [https://tapfortap.com](https://tapfortap.com)
 
-For documentation on how to use the Unity plugin visit the [Tap for Tap documentation portal](http://tapfortap.com/documentation/Unity).
+For documentation on how to use the Unity plugin visit the [Tap for Tap documentation portal](https://tapfortap.com/doc/plugins/unity).
 
 # Unity  Build Instructions 
-Set the following environment variables:
 
-### For Android
-- ANDROID_SDK="PATH TO ANDROID SDK" (ie. /usr/local/android/) 
-- ANDROID_TARGET="ANDROID TARGET SDK" (ie. 17)
-
-### For iOS
-- IOS_TARGET="IPHONE TARGET SDK" (ie iphoneos6.1)
-
-### Unity
-export UNITY_SDK="PATH TO YOUR UNITY SDK" (ie. /Applications/Unity/)
+1. Install Unity
+2. Set the following environment variables:
+  - For Android
+      - `ANDROID_SDK="PATH TO ANDROID SDK"` (ie. `/usr/local/android/`) 
+      - `ANDROID_TARGET="ANDROID TARGET SDK"` (ie. `17`)
+  - For iOS
+      - `IOS_TARGET="IPHONE TARGET SDK"` (ie. `iphoneos6.1`)
+  - For Unity
+      - `UNITY_SDK="PATH TO YOUR UNITY SDK"` (ie. `/Applications/Unity/`)
+3. Run `release.sh`
 
 1.3.0 / 2013-03-05
 ==================
 ### General
 - Add three new callbacks to app-walls and interstitials
   - OnReceive
-    - Called when a new ad is finished downloading
+      - Called when a new ad is finished downloading
   - OnShow
-  	- Called when an ad is shown
+  	  - Called when an ad is shown
   - On Tap
-  	- Called when the user taps the ad
+  	  - Called when the user taps the ad
 
 ### Android
 - Update TapForTap.jar to 3.0.5

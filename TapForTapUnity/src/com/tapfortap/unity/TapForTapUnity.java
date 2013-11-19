@@ -46,7 +46,7 @@ public class TapForTapUnity {
 
     public static void initializeWithApiKey(String apiKey) {
         TapForTap.PLUGIN = "unity";
-        TapForTap.PLUGIN_VERSION = "1.3.0";
+        TapForTap.PLUGIN_VERSION = "1.3.1";
         TapForTap.initialize(UnityPlayer.currentActivity, apiKey);
     }
 
