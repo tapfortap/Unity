@@ -1,64 +1,99 @@
-# Tap for Tap Unity Plugin
+# Unity - SDK Implementation #
 
-For more information about Tap for Tap visit [https://tapfortap.com](https://tapfortap.com)
+##  General Information ##
 
-For documentation on how to use the Unity plugin visit the [Tap for Tap documentation portal](https://tapfortap.com/doc/plugins/unity).
+Integrating Tap for Tap into your Unity Project is really easy! Follow the steps below to get started.
 
-# Unity  Build Instructions 
+# Instructions (Unity) #
 
-1. Install Unity
-2. Set the following environment variables:
-  - For Android
-      - `ANDROID_SDK="PATH TO ANDROID SDK"` (ie. `/usr/local/android/`) 
-      - `ANDROID_TARGET="ANDROID TARGET SDK"` (ie. `17`)
-  - For iOS
-      - `IOS_TARGET="IPHONE TARGET SDK"` (ie. `iphoneos6.1`)
-  - For Unity
-      - `UNITY_SDK="PATH TO YOUR UNITY SDK"` (ie. `/Applications/Unity/`)
-3. Run `release.sh`
+##  Step 1: Add Tap for Tap to Your Project.
 
-1.3.0 / 2013-03-05
-==================
-### General
-- Add three new callbacks to app-walls and interstitials
-  - OnReceive
-      - Called when a new ad is finished downloading
-  - OnShow
-  	  - Called when an ad is shown
-  - On Tap
-  	  - Called when the user taps the ad
+- Download the [Tap for Tap Unity Plugin]().
 
-### Android
-- Update TapForTap.jar to 3.0.5
+- Unzip the archive.
 
-### iOS
-- Update libTapForTap.a to 3.0.5
+- Import the TapForTapUnity.unitypackage:
+    - Go to Assets -> Import Package -> Custom Package...
 
-1.2.0 / 2013-03-05
-==================
-### Android
-- Update TapForTap.jar to 2.2.0
+    - Leave all files selected and click `Import`
 
-### iOS
-- Update libTapForTap.a to 2.2.0
+    - Use the file menu to select `TapForTap.aar`, Android Studio should fill in both text fields.
 
-1.1.0 / 2013-01-30
-==================
+## Step 2 - Add Your API Key to Your AndroidManifest.xml
 
-General
-=======
-* Move Tap for Tap files from Script/ to Plugin/ so UnityScript programs can use TapForTap
-* Implemented a TapForTapNull if platform is neither iOS or Android
+In your Assets find the file `AndroidManifest.xml` under `Assets/Plugins/Android` and look for the following meta tag:
 
-Android
-=======
-* Updated to Tap for Tap Android SDK 2.1.1
+```xml
+<meta-data
+    android:name="com.tapfortap.API_KEY"
+    android:value="MY_API_KEY"/>
+```
 
-iOS
-===
-* Updated to Tap for Tap iOS SDK 2.1.1
-* Fixed a potential invalid memory release 
+Replace `MY_API_KEY` with your Tap for Tap API key which can be found on the [account](https://tapfortap.com/manage/account) page.
 
-1.0.0 / 2012-12-18
-==================
-- First release
+
+## Step 3 - Initialize the SDK
+
+To initialize TapForTap, call the following code and replace `YOUR_API_KEY` with your personal API Key.
+
+```
+TapForTap.initialize("YOUR_API_KEY");
+```
+
+## Step 4 - Display Ads
+
+### Banners
+
+Banners are not yet supported.
+
+### Break Interstitials
+
+Showing an break interstitial is easy.
+
+- First make sure you have initialized the TapForTap SDK as described in step 3.
+
+- Call `Interstitial.loadBreakInterstitial()` to create a new Break Interstitial. The method returns an Interstitial - make sure to store it as you will need it later to show the Interstitial once it has loaded.
+
+```csharp
+		var interstitial = Interstitial.loadBreakInterstitial();
+```
+
+- Subscribe to the `interstitialDidReceiveAdd` event from the InterstitialListener. Because of JNI limitaions there is currently only one default Listener, which can be accessed by calling `TapForTap.getInterstitialListener()`.
+
+```csharp
+		TapForTap.getInterstitialListener().interstitialDidReceiveAd += () => {
+			Debug.Log ("Interstitial is ready!");
+			interstitial.show(); 
+		};
+```
+
+### Achievement and Rescue Interstitials
+
+Achievement and Rescue interstitials work similarly to Break interstitials. You should use these at points in your application where you'd like to reward the user, or to allow them to continue playing by watching an advertisement.
+
+
+Call `loadAchievementInterstitial` or `loadRescueInterstitial`:
+
+```csharp
+    interstitial = Interstitial.loadRescueInterstitial ("Need a Boost?", "My App", "Watch a short message", "Free boost", "http://yourdomain.com/app_logo.png", "Tap for your free boost!");
+
+```
+
+```csharp
+    interstitial = Interstitial.loadAchievementInterstitial ("You beat the level!", "a free gift!", "http://yourdomain.com/app_logo.png");
+```
+
+## Step 7 - Send Optional Information About Your Users
+If you have information about your users that your privacy policy allows you to share with us,
+you can improve performance and revenue by passing it along.
+We accept year of birth, gender, location, and the account ID of user's on your system.
+
+```csharp
+TapForTap.setGender(<MALE or FEMALE>);
+TapForTap.setYearOfBirth(<year>);
+TapForTap.setLocation(<location>);
+TapForTap.setUserAccountId(<accountId>);
+```
+Where gender is `either` `Gender.male` or `Gender.female`, `age` is a positive integer, `location` is two doubles (double latitude, double longitude), and user `account ID`s are strings.
+
+**Note:** If you are using Tap for Tap's [monetization](/doc/monetization) program passing this information can greatly increase your revenue.
