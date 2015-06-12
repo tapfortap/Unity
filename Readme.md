@@ -8,7 +8,7 @@ Integrating Tap for Tap into your Unity Project is really easy! Follow the steps
 
 ##  Step 1: Add Tap for Tap to Your Project.
 
-- Download the [Tap for Tap Unity Plugin]().
+- Download the [Tap for Tap Unity Plugin](https://github.com/tapfortap/Unity/archive/master.zip).
 
 - Unzip the archive.
 
