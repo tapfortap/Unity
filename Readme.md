@@ -17,8 +17,6 @@ Integrating Tap for Tap into your Unity Project is really easy! Follow the steps
 
     - Leave all files selected and click `Import`
 
-    - Use the file menu to select `TapForTap.aar`, Android Studio should fill in both text fields.
-
 ## Step 2 - Add Your API Key to Your AndroidManifest.xml
 
 In your Assets find the file `AndroidManifest.xml` under `Assets/Plugins/Android` and look for the following meta tag:
